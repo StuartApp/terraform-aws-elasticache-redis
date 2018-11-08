@@ -18,21 +18,28 @@ resource "aws_security_group" "default" {
   vpc_id = "${var.vpc_id}"
   name   = "${module.label.id}"
 
-  ingress {
-    from_port       = "${var.port}"              # Redis
-    to_port         = "${var.port}"
-    protocol        = "tcp"
-    security_groups = ["${var.security_groups}"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
   tags = "${module.label.tags}"
+}
+
+resource "aws_security_group_rule" "default_ingress" {
+  count                    = "${length(var.security_groups)}"
+  type                     = "ingress"
+  from_port                = "${var.port}"
+  to_port                  = "${var.port}"
+  protocol                 = "tcp"
+  source_security_group_id = "${var.security_groups[count.index]}"
+
+  security_group_id = "${aws_security_group.default.id}"
+}
+
+resource "aws_security_group_rule" "default_egress" {
+  type        = "egress"
+  from_port   = 0
+  to_port     = 0
+  protocol    = "-1"
+  cidr_blocks = ["0.0.0.0/0"]
+
+  security_group_id = "${aws_security_group.default.id}"
 }
 
 resource "aws_elasticache_subnet_group" "default" {
