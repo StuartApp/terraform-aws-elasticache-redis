@@ -81,6 +81,7 @@ resource "aws_elasticache_replication_group" "default" {
   engine_version                = var.engine_version
   at_rest_encryption_enabled    = var.at_rest_encryption_enabled
   transit_encryption_enabled    = var.transit_encryption_enabled
+  apply_immediately             = var.apply_immediately
 
   tags = module.label.tags
 }
