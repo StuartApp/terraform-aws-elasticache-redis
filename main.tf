@@ -82,6 +82,8 @@ resource "aws_elasticache_replication_group" "default" {
   at_rest_encryption_enabled    = var.at_rest_encryption_enabled
   transit_encryption_enabled    = var.transit_encryption_enabled
   apply_immediately             = var.apply_immediately
+  snapshot_window               = var.snapshot_window
+  snapshot_retention_limit      = var.snapshot_retention_limit
 
   tags = module.label.tags
 }
