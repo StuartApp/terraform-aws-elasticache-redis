@@ -105,7 +105,7 @@ resource "aws_cloudwatch_metric_alarm" "cache_cpu" {
   threshold = var.alarm_cpu_threshold_percent
 
   dimensions = {
-    CacheClusterId = aws_elasticache_replication_group.default[count.index]
+    CacheClusterId = element(aws_elasticache_replication_group.default, count.index)
   }
 
   alarm_actions = var.alarm_actions
@@ -127,7 +127,7 @@ resource "aws_cloudwatch_metric_alarm" "cache_memory" {
   threshold = var.alarm_memory_threshold_bytes
 
   dimensions = {
-    CacheClusterId = aws_elasticache_replication_group.default[count.index]
+    CacheClusterId = element(aws_elasticache_replication_group.default, count.index)
   }
 
   alarm_actions = var.alarm_actions
