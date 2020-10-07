@@ -144,6 +144,12 @@ variable "alarm_memory_threshold_bytes" {
   description = "Ram threshold alarm level"
 }
 
+variable "alarm_datapoints_to_alarm" {
+  type        = number
+  description = "Number of repeats to trigger the alarm"
+  default     = null
+}
+
 variable "alarm_actions" {
   type        = list(string)
   description = "Alarm action list"
