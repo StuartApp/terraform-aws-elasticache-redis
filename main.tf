@@ -92,7 +92,7 @@ resource "aws_elasticache_replication_group" "default" {
 # CloudWatch Resources
 #
 resource "aws_cloudwatch_metric_alarm" "cache_cpu" {
-  for_each            = aws_elasticache_replication_group.default.members
+  for_each            = aws_elasticache_replication_group.default.member_clusters
   alarm_name          = "${local.cloudwatch_metric_alarm_name_prefix}-cpu-utilization"
   alarm_description   = "Redis cluster CPU utilization"
   comparison_operator = "GreaterThanThreshold"
@@ -114,7 +114,7 @@ resource "aws_cloudwatch_metric_alarm" "cache_cpu" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "cache_memory" {
-  for_each            = aws_elasticache_replication_group.default.members
+  for_each            = aws_elasticache_replication_group.default.member_clusters
   alarm_name          = "${local.cloudwatch_metric_alarm_name_prefix}-freeable-memory"
   alarm_description   = "Redis cluster freeable memory"
   comparison_operator = "LessThanThreshold"
